@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Epic Play Hub Official</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #da1f5d;
+      --secondary-color: #00bfff;
+      --bg-dark: #0a0e27;
+      --text-light: #fff;
+      --text-muted: #a8b2d1;
+      --gradient: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.45);
+    }
+
+    .container {
+      width: 380px;
+      background: rgba(18, 22, 48, 0.88);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(218, 31, 93, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      width: 90px;
+      height: auto;
+      display: block;
+      margin: 0 auto 1rem auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(218, 31, 93, 0.6);
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.4rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(218, 31, 93, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--gradient);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(218, 31, 93, 0.4);
+    }
+
+    .progress-container {
+      display: none;
+      margin-top: 1.2rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.6rem;
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    .status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .status.success {
+      color: #00b894;
+    }
+
+    .status.error {
+      color: #e74c3c;
+    }
+
+    .footer {
+      font-size: 0.8rem;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <video autoplay muted loop id="bgVideo">
+    <source src="./backgroundGIF.mp4" type="video/mp4" />
+  </video>
+
+  <div class="container">
+    <img src="./EPIC.png" alt="Epic Play Hub Logo" class="logo" />
+    <h1>Epic Play Hub Official</h1>
+    <p class="subtitle">Download Steam game files easily</p>
+
+    <div class="input-group">
+      <label for="appId">Enter App ID</label>
+      <input type="text" id="appId" placeholder="e.g. 1888930" />
+    </div>
+
+    <div class="input-group">
+      <label for="source">Select Download Source</label>
+      <select id="source">
+        <option value="official">Github Official Source</option>
+        <option value="ghproxy" selected>ghproxy.net Accelerated Source</option>
+        <option value="ghproxy2">ghfast.top Accelerated Source</option>
+      </select>
+    </div>
+
+    <button onclick="downloadManifest()">Download</button>
+
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+
+    <div class="footer">
+      Get app ID here: <a href="https://steamdb.info/" target="_blank">SteamDB</a><br />
+      Download injector here:
+      <a href="https://www.steamtools.net/download.html" target="_blank">SteamInjectTool</a>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        messages: {
+          enterAppId: "Please enter App ID!",
+          preparing: "Preparing download...",
+          downloadStarted:
+            "Download started! Check your browser downloads.<br>If redirected to an error page, the App ID may not have files or try switching source.",
+        },
+      },
+    };
+
+    let currentLang = "en";
+
+    function downloadManifest() {
+      const appId = document.getElementById("appId").value.trim();
+      const source = document.getElementById("source").value;
+      const t = translations[currentLang];
+
+      if (!appId) {
+        showStatus(t.messages.enterAppId, "error");
+        return;
+      }
+
+      const progressContainer = document.getElementById("progressContainer");
+      const progress = document.getElementById("progress");
+      progressContainer.style.display = "block";
+      progress.style.width = "0%";
+      showStatus(t.messages.preparing, "");
+
+      let baseUrl;
+      switch (source) {
+        case "ghproxy":
+          baseUrl =
+            "https://ghproxy.net/https://github.com/SteamAutoCracks/ManifestHub/archive/refs/heads/";
+          break;
+        case "ghproxy2":
+          baseUrl =
+            "https://ghfast.top/https://github.com/SteamAutoCracks/ManifestHub/archive/refs/heads/";
+          break;
+        default:
+          baseUrl =
+            "https://github.com/SteamAutoCracks/ManifestHub/archive/refs/heads/";
+      }
+
+      const downloadUrl = `${baseUrl}${appId}.zip`;
+      let width = 0;
+
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          showStatus(t.messages.downloadStarted, "success");
+          setTimeout(() => {
+            const link = document.createElement("a");
+            link.href = downloadUrl;
+            link.download = `manifest_${appId}.zip`;
+            link.target = "_blank";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }, 1000);
+        } else {
+          width++;
+          progress.style.width = width + "%";
+        }
+      }, 5);
+    }
+
+    function showStatus(message, type) {
+      const status = document.getElementById("status");
+      status.innerHTML = message;
+      status.className = "status " + type;
+    }
+
+    document.getElementById("appId").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") downloadManifest();
+    });
+  </script>
+</body>
+</html>
